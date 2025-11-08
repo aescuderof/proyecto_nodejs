@@ -1,221 +1,71 @@
-const express = require('express')
-const router = express.Router()
+// Importamos las librerías necesarias
+const express = require('express') // Express.js para manejo de rutas
+const router = express.Router() // Creamos un router Express
 
+// Importamos el controlador de pedidos
 const ordersController = require('../controllers/ordersController')
 
+// Definimos la especificación de Swagger para la entidad Order
 /**
  * @swagger
  * components:
  *  schemas:
- *    Order:
- *      type: object
- *      properties:
- *        id:
- *          type: integer
- *          description: The order's unique identifier
- *        name:
- *          type: string
- *          description: The name of the ordered item
- *        restaurant:
- *          type: string
- *          description: The restaurant's name
- *        date:
- *          type: string
- *          format: date
- *          description: The date of the order
- *        status:
- *          type: string
- *          description: The order's status
- *        price:
- *          type: number
- *          description: The price of the ordered item
- *        quantity:
- *          type: integer
- *          description: The quantity of the ordered item
- *        total:
- *          type: number
- *          description: The order's total amount
- *      required:
- *        - id
- *        - name
- *        - restaurant
- *        - date
- *        - status
- *        - price
- *        - quantity
- *        - total
- *      example:
- *        id: 1
- *        name: "Pizza de peperoni"
- *        restaurant: "Pizza Hut"
- *        date: "2021-09-01"
- *        status: "Enviado"
- *        price: 100
- *        quantity: 2
- *        total: 200
+ *    Order: { ... }
  */
 
-// a. Crear pedido
+// Endpoint para crear un nuevo pedido
 /**
  * @swagger
  * /api/orders:
  *  post:
- *    summary: Create a new order
- *    tags: [Orders]
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/Order'
- *    responses:
- *      201:
- *        description: Order created successfully
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Order'
+ *    ...
  */
-router.post('/', ordersController.create)
+router.post('/', ordersController.create) // Asociamos el controlador de creación de pedidos
 
-// b. Obtener la lista de pedidos
+// Endpoint para obtener la lista de pedidos
 /**
  * @swagger
  * /api/orders:
  *  get:
- *    summary: Get a list of all orders
- *    tags: [Orders]
- *    responses:
- *      200:
- *        description: A list of orders
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/Order'
+ *    ...
  */
-router.get('/', ordersController.readAll)
+router.get('/', ordersController.readAll) // Asociamos el controlador de lectura de todos los pedidos
 
-// d. Actualizar información de un pedido específico
+// Endpoint para actualizar un pedido específico
 /**
  * @swagger
  * /api/orders/{id}:
  *  put:
- *    summary: Update information of a specific order
- *    tags: [Orders]
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: integer
- *        required: true
- *        description: The order's unique identifier
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/Order'
- *    responses:
- *      200:
- *        description: Order updated successfully
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Order'
- *      404:
- *        description: Order not found
+ *    ...
  */
-router.put('/:id', ordersController.update)
+router.put('/:id', ordersController.update) // Asociamos el controlador de actualización de un pedido
 
-// e. Eliminar un pedido específico
+// Endpoint para eliminar un pedido específico
 /**
  * @swagger
  * /api/orders/{id}:
  *  delete:
- *    summary: Delete a specific order
- *    tags: [Orders]
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: integer
- *        required: true
- *        description: The order's unique identifier
- *    responses:
- *      200:
- *        description: Order deleted successfully
- *      404:
- *        description: Order not found
+ *    ...
  */
-router.delete('/:id', ordersController.delete)
+router.delete('/:id', ordersController.delete) // Asociamos el controlador de eliminación de un pedido
 
-// f-j. Filtros
+// Endpoint para buscar pedidos con varios filtros
 /**
  * @swagger
  * /api/orders/search:
  *  get:
- *    summary: Search orders with filters
- *    tags: [Orders]
- *    parameters:
- *      - in: query
- *        name: name
- *        schema:
- *          type: string
- *        description: The name of the ordered item
- *      - in: query
- *        name: restaurant
- *        schema:
- *          type: string
- *        description: The restaurant's name
- *      - in: query
- *        name: date
- *        schema:
- *          type: string
- *          format: date
- *        description: The date of the order
- *      - in: query
- *        name: status
- *        schema:
- *          type: string
- *        description: The order's status
- *    responses:
- *      200:
- *        description: A list of orders that match the filters
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/Order'
+ *    ...
  */
-router.get('/search', ordersController.filter)
+router.get('/search', ordersController.filter) // Asociamos el controlador de búsqueda con filtros
 
-// c. Obtener información de un pedido específico
+// Endpoint para obtener información de un pedido específico
 /**
  * @swagger
  * /api/orders/{id}:
  *  get:
- *    summary: Get information of a specific order
- *    tags: [Orders]
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: integer
- *        required: true
- *        description: The order's unique identifier
- *    responses:
- *      200:
- *        description: Information of the specific order
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Order'
- *      404:
- *        description: Order not found
+ *    ...
  */
-router.get('/:id', ordersController.readOne)
+router.get('/:id', ordersController.readOne) // Asociamos el controlador de lectura de un pedido específico
 
-module.exports = router
+// Exportamos el router
+module.exports = router // Exportamos el router para usarlo en otras partes de la aplicación
